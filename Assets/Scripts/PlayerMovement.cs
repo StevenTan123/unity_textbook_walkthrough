@@ -8,10 +8,12 @@ public class PlayerMovement : MonoBehaviour {
     public float rotationSpeed;
     private Vector2 movementValue;
     private float lookValue;
+    private Rigidbody rigidBody;
 
     private void Awake() {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        rigidBody = GetComponent<Rigidbody>();
     }
 
     private void OnMove(InputValue value) {
@@ -24,7 +26,7 @@ public class PlayerMovement : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        transform.Translate(movementValue.x * Time.deltaTime, 0, movementValue.y * Time.deltaTime);
-        transform.Rotate(0, lookValue * Time.deltaTime, 0);
+        rigidBody.AddRelativeForce(movementValue.x * Time.deltaTime, 0, movementValue.y * Time.deltaTime);
+        rigidBody.AddRelativeTorque(0, lookValue * Time.deltaTime, 0);
     }
 }
